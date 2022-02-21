@@ -1,36 +1,29 @@
 package com.miu.mdp.labs
 
 import android.os.Bundle
-import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.miu.mdp.labs.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mainBinding: ActivityMainBinding
 
-    private val foodsList = arrayListOf("Hamburger", "Pizza", "Mexican", "American", "Chinese")
+    val options = arrayListOf("Hamburger", "Pizza", "Mexican", "American", "Chinese")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mainBinding.root)
+        setContentView(R.layout.activity_main)
 
-        mainBinding.btnDecide.setOnClickListener {
-            val random = Random.nextInt(foodsList.size)
-            mainBinding.foodChoice.text = foodsList[random]
+        decide_button.setOnClickListener {
+            val random = Random.nextInt(options.size)
+            food_choice.text = options[random]
         }
 
-        mainBinding.addFood.setOnClickListener {
-            val newFood = mainBinding.foodEditText.text.toString()
-
-            if (newFood.isEmpty()) return@setOnClickListener
-            foodsList.add(newFood)
-            mainBinding.foodEditText.clear()
+        add_food_button.setOnClickListener {
+            val newFood = edit_text.text.toString()
+            options.add(newFood)
+            edit_text.setText("")
+            Toast.makeText(this, "Added food!",Toast.LENGTH_SHORT).show()
         }
     }
-}
-
-private fun EditText.clear() {
-    this.setText("")
 }
